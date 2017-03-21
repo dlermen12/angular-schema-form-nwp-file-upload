@@ -120,6 +120,7 @@ Options
       {
          "key":      "image",
          "type":     "nwpFileUpload",
+         "showUploadButton" : true,
          "endpoint": "https://angular-file-upload-cors-srv.appspot.com/upload",
          "i18n": {
                 "add": "Open file browser",

@@ -37,7 +37,7 @@
                     {{ picFile.progress }} %
                 </div>
             </div>
-            <button class="btn btn-primary btn-sm" type="button" ng-click="uploadFile(picFile)" ng-disabled="!picFile || picFile.$error">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}
+            <button ng-if="showUploadButton" class="btn btn-primary btn-sm" type="button" ng-click="uploadFile(picFile)" ng-disabled="!picFile || picFile.$error">{{ form.i18n.upload ? form.i18n.upload : ('buttons.upload' | translate) }}
             </button>
         </div>
     </div>
