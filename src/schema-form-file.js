@@ -91,6 +91,7 @@ angular
                 scope.isSinglefileUpload = scope.form && scope.form.schema && scope.form.schema.format === 'singlefile';
 
                 scope.showUploadButton = !!scope.form.showUploadButton;
+                var successCallback = scope.form.successCallback || angular.noop;
 
                 scope.selectFile = function (file) {
                     scope.picFile = file;
@@ -104,15 +105,18 @@ angular
                 };
 
                 scope.uploadFiles = function (files) {
-                    files.length && angular.forEach(files, function (file) {
-                        doUpload(file);
+                    files.length && angular.forEach(files, function (file, index) {
+                        var length = files.length;
+                        length--;
+                        doUpload(file, index, length);
                     });
                 };
 
-                function doUpload(file) {
+                function doUpload(file, index, total) {
                     if (file && !file.$error && scope.url) {
                         var options = {
                             url: scope.url,
+                            data: scope.form.requestData,
                             file: {}
                         };
                         options.file[scope.form.fileName || 'file'] = file;
@@ -125,6 +129,10 @@ angular
                             var result = scope.form.post ? scope.form.post(response.data) : response.data;
                             ngModel.$setViewValue(result);
                             ngModel.$commitViewValue();
+
+                            if (index === total) {
+                                successCallback();
+                            }
                         }, function (response) {
                             if (response.status > 0) {
                                 scope.errorMsg = response.status + ': ' + response.data;
