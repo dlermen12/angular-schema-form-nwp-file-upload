@@ -116,10 +116,10 @@ angular
                     if (file && !file.$error && scope.url) {
                         var options = {
                             url: scope.url,
-                            data: scope.form.requestData,
+                            data: scope.form.requestData(),
                             file: {}
                         };
-                        options.file[scope.form.fileName || 'file'] = file;
+                        options.file = file;
                         file.upload = Upload.upload(options);
 
                         file.upload.then(function (response) {
